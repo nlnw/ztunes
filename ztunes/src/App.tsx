@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import "./App.css";
 import { getCollection, getMintData, getNftData, getSalesData } from "./api";
 import {
   Box,
+  Button,
   Divider,
   FormLabel,
   Heading,
@@ -41,11 +42,21 @@ export const processImgURI = (url: string) => {
   }
 };
 
+// const updateSong = (source: any) => {
+//   setSource(source);
+//   if (audioRef.current) {
+//     audioRef.current.pause();
+//     audioRef.current.load();
+//     audioRef.current.play();
+//   }
+// };
+
 function App() {
   const [collectionAddress, setCollectionAddress] = useState(
     "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7"
   );
   const [tokenId, setTokenId] = useState("8422");
+  const audioRef = useRef();
 
   const [collectionData, setCollectionData] = useState({});
   const [salesData, setSalesData]: [any, any] = useState({});
@@ -68,8 +79,14 @@ function App() {
       setMintData(mintData);
       setSalesData(salesData);
       setNftData(nftData);
+
+      // audioRef.pause();
+      // audioRef.load();
+      // audioRef.play();
     })();
   }, [collectionAddress, tokenId]);
+
+  console.log(nftData);
 
   const imageURI = useMemo(
     () => processImgURI(nftData?.token?.token.image?.url as string) as string,
@@ -81,7 +98,7 @@ function App() {
 
   return (
     <VStack paddingY="10">
-      <Heading>NFT historical data explorer 🗺</Heading>
+      <Heading>zTunes 🎸</Heading>
 
       <Divider />
 
@@ -124,6 +141,13 @@ function App() {
       ) : (
         <Skeleton height="300px" width="300px" rounded="lg" />
       )}
+
+      <audio controls src={nftData?.token?.token.content?.url} />
+
+      <HStack>
+        <Button>Prev</Button>
+        <Button>Next</Button>
+      </HStack>
 
       <Divider />
 
