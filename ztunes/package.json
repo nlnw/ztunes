@@ -12,6 +12,7 @@
     "@chakra-ui/react": "^2.2.6",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
+    "@zoralabs/nft-components": "^1.1.2",
     "@zoralabs/zdk": "^2.1.4",
     "framer-motion": "^6.5.1",
     "react": "^18.2.0",

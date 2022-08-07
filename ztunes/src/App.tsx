@@ -21,6 +21,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import { NFTPreview } from "@zoralabs/nft-components";
 
 const appendIpfsGateway = (ipfsHash: string) => {
   return `https://ipfs.infura.io/ipfs/${ipfsHash}`;
@@ -84,6 +85,8 @@ function App() {
       <Heading>NFT historical data explorer 🗺</Heading>
 
       <Divider />
+
+      <NFTPreview id={tokenId} contract={collectionAddress} />
 
       <HStack padding="4" spacing="8">
         <VStack spacing="0">
@@ -181,6 +184,11 @@ function App() {
       })}
 
       <Text>Current owner - {nftData?.token?.token.owner as string}</Text>
+
+      <Divider />
+      <Text>
+        Powered by <a href="https://zora.co">Zora</a>
+      </Text>
     </VStack>
   );
 }
