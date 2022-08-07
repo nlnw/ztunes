@@ -29,7 +29,7 @@ const appendIpfsGateway = (ipfsHash: string) => {
 };
 
 // Adds a prefix to the image URI to make it a valid URL, in case it's an IPFS hash
-export const processImgURI = (url: string) => {
+const processImgURI = (url: string) => {
   if (!url) {
     return null;
   }
@@ -43,9 +43,12 @@ export const processImgURI = (url: string) => {
   }
 };
 
-function App() {
-  const randomSong = songs[Math.floor(Math.random() * songs.length)];
+const getRandomSong = () => {
+  return songs[Math.floor(Math.random() * songs.length)];
+};
 
+function App() {
+  const randomSong = getRandomSong();
   const [collectionAddress, setCollectionAddress] = useState(randomSong[0]);
   const [tokenId, setTokenId] = useState(randomSong[1]);
 
@@ -83,6 +86,12 @@ function App() {
   const hasAnySales =
     salesData?.sales?.nodes?.length && salesData?.sales?.nodes?.length > 0;
 
+  const nextSong = () => {
+    const randomSong = getRandomSong();
+    setCollectionAddress(randomSong[0]);
+    setTokenId(randomSong[1]);
+  };
+
   return (
     <VStack paddingY="10">
       <Heading>zTunes 🎸</Heading>
@@ -114,17 +123,22 @@ function App() {
       <Divider />
 
       {imageURI ? (
-        <Box
-          borderColor="gray.200"
-          borderWidth="1px"
-          width="fit-content"
-          marginTop="4"
-          padding="6"
-          shadow="md"
-          rounded="lg"
+        <a
+          href={`https://zora.co/collections/${collectionAddress}/${tokenId}`}
+          target="_blank"
         >
-          <Image src={imageURI} height="300" />
-        </Box>
+          <Box
+            borderColor="gray.200"
+            borderWidth="1px"
+            width="fit-content"
+            marginTop="4"
+            padding="6"
+            shadow="md"
+            rounded="lg"
+          >
+            <Image src={imageURI} height="300" />
+          </Box>
+        </a>
       ) : (
         <Skeleton height="300px" width="300px" rounded="lg" />
       )}
@@ -132,8 +146,8 @@ function App() {
       <audio controls autoPlay src={nftData?.token?.token.content?.url} />
 
       <HStack>
-        <Button>Prev</Button>
-        <Button>Next</Button>
+        <Button disabled>Prev</Button>
+        <Button onClick={nextSong}>Next</Button>
       </HStack>
 
       <Divider />
@@ -148,7 +162,7 @@ function App() {
                 <Th>Price (USD)</Th>
                 <Th>Price (ETH)</Th>
                 <Th>Date</Th>
-                <Th>Tx Hash</Th>
+                {/* <Th>Tx Hash</Th> */}
               </Tr>
             </Thead>
 
@@ -166,7 +180,7 @@ function App() {
                         sale.transactionInfo.blockTimestamp
                       ).toDateString()}
                     </Td>
-                    <Td> {sale.transactionInfo.transactionHash as string}</Td>
+                    {/* <Td> {sale.transactionInfo.transactionHash as string}</Td> */}
                   </Tr>
                 );
               })}
@@ -184,8 +198,16 @@ function App() {
           <VStack key={mint.transactionInfo.transactionHash}>
             <Text>
               Minted by {mint.originatorAddress as string} on{" "}
-              {new Date(mint.transactionInfo.blockTimestamp).toDateString()}. Tx
-              hash: {mint.transactionInfo.transactionHash as string}
+              {new Date(mint.transactionInfo.blockTimestamp).toDateString()}.
+            </Text>
+            <Text>
+              Tx hash:{" "}
+              <a
+                href={`https://etherscan.io/tx/${mint.transactionInfo.transactionHash}`}
+                target="_blank"
+              >
+                {mint.transactionInfo.transactionHash as string}
+              </a>
             </Text>
           </VStack>
         );
