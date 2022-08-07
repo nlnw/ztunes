@@ -21,7 +21,6 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
-import { NFTPreview } from "@zoralabs/nft-components";
 
 const appendIpfsGateway = (ipfsHash: string) => {
   return `https://ipfs.infura.io/ipfs/${ipfsHash}`;
@@ -44,9 +43,9 @@ export const processImgURI = (url: string) => {
 
 function App() {
   const [collectionAddress, setCollectionAddress] = useState(
-    "0x25ed58c027921e14d86380ea2646e3a1b5c55a8b"
+    "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7"
   );
-  const [tokenId, setTokenId] = useState("300");
+  const [tokenId, setTokenId] = useState("8422");
 
   const [collectionData, setCollectionData] = useState({});
   const [salesData, setSalesData]: [any, any] = useState({});
@@ -85,8 +84,6 @@ function App() {
       <Heading>NFT historical data explorer 🗺</Heading>
 
       <Divider />
-
-      <NFTPreview id={tokenId} contract={collectionAddress} />
 
       <HStack padding="4" spacing="8">
         <VStack spacing="0">
