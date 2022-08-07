@@ -76,8 +76,6 @@ function App() {
     })();
   }, [collectionAddress, tokenId]);
 
-  console.log(songs);
-
   const imageURI = useMemo(
     () => processImgURI(nftData?.token?.token.image?.url as string) as string,
     [nftData]
