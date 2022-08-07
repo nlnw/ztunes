@@ -22,6 +22,7 @@ import {
   Tr,
   VStack,
 } from "@chakra-ui/react";
+import songs from "./songs.json";
 
 const appendIpfsGateway = (ipfsHash: string) => {
   return `https://ipfs.infura.io/ipfs/${ipfsHash}`;
@@ -42,21 +43,11 @@ export const processImgURI = (url: string) => {
   }
 };
 
-// const updateSong = (source: any) => {
-//   setSource(source);
-//   if (audioRef.current) {
-//     audioRef.current.pause();
-//     audioRef.current.load();
-//     audioRef.current.play();
-//   }
-// };
-
 function App() {
-  const [collectionAddress, setCollectionAddress] = useState(
-    "0xabefbc9fd2f806065b4f3c237d4b59d9a97bcac7"
-  );
-  const [tokenId, setTokenId] = useState("8422");
-  const audioRef = useRef();
+  const randomSong = songs[Math.floor(Math.random() * songs.length)];
+
+  const [collectionAddress, setCollectionAddress] = useState(randomSong[0]);
+  const [tokenId, setTokenId] = useState(randomSong[1]);
 
   const [collectionData, setCollectionData] = useState({});
   const [salesData, setSalesData]: [any, any] = useState({});
@@ -79,14 +70,10 @@ function App() {
       setMintData(mintData);
       setSalesData(salesData);
       setNftData(nftData);
-
-      // audioRef.pause();
-      // audioRef.load();
-      // audioRef.play();
     })();
   }, [collectionAddress, tokenId]);
 
-  console.log(nftData);
+  console.log(songs);
 
   const imageURI = useMemo(
     () => processImgURI(nftData?.token?.token.image?.url as string) as string,
@@ -142,7 +129,7 @@ function App() {
         <Skeleton height="300px" width="300px" rounded="lg" />
       )}
 
-      <audio controls src={nftData?.token?.token.content?.url} />
+      <audio controls autoPlay src={nftData?.token?.token.content?.url} />
 
       <HStack>
         <Button>Prev</Button>
