@@ -126,22 +126,23 @@ function App() {
       <Divider />
 
       {imageURI ? (
-        <a
-          href={`https://zora.co/collections/${collectionAddress}/${tokenId}`}
-          target="_blank"
+        <Box
+          borderWidth="1px"
+          width="fit-content"
+          marginTop="4"
+          padding="6"
+          shadow="md"
+          fontWeight="bold"
         >
-          <Box
-            borderColor="gray.200"
-            borderWidth="1px"
-            width="fit-content"
-            marginTop="4"
-            padding="6"
-            shadow="md"
-            rounded="lg"
+          <Text>{nftData?.token?.token.name}</Text>
+          <br />
+          <a
+            href={`https://zora.co/collections/${collectionAddress}/${tokenId}`}
+            target="_blank"
           >
             <Image src={imageURI} height="300" />
-          </Box>
-        </a>
+          </a>
+        </Box>
       ) : (
         <Skeleton height="300px" width="300px" rounded="lg" />
       )}
@@ -157,7 +158,7 @@ function App() {
 
       {hasAnySales ? (
         <TableContainer>
-          <Table variant="striped">
+          <Table size="sm" variant="striped">
             <TableCaption>Historical sales data</TableCaption>
             <Thead>
               <Tr>
