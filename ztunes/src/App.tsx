@@ -20,6 +20,7 @@ import {
   Th,
   Thead,
   Tr,
+  useColorMode,
   VStack,
 } from "@chakra-ui/react";
 import songs from "./songs.json";
@@ -90,9 +91,13 @@ function App() {
     setTokenId(randomSong[1]);
   };
 
+  const { colorMode, toggleColorMode } = useColorMode();
+
   return (
     <VStack paddingY="10">
-      <Heading>zTunes 🎸</Heading>
+      <Heading>
+        zTunes <button onClick={toggleColorMode}>🎸</button>
+      </Heading>
 
       <Divider />
 
