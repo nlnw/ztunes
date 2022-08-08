@@ -147,7 +147,12 @@ function App() {
         <Skeleton height="300px" width="300px" rounded="lg" />
       )}
 
-      <audio controls autoPlay src={nftData?.token?.token.content?.url} />
+      <audio
+        controls
+        autoPlay
+        src={nftData?.token?.token.content?.url}
+        onEnded={nextSong}
+      />
 
       <HStack>
         <Button disabled>Prev</Button>
