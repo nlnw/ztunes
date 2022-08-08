@@ -207,8 +207,14 @@ function App() {
         return (
           <VStack key={mint.transactionInfo.transactionHash}>
             <Text>
-              Minted by {mint.originatorAddress as string} on{" "}
-              {new Date(mint.transactionInfo.blockTimestamp).toDateString()}.
+              Minted by{" "}
+              <a
+                href={`https://etherscan.io/address/${mint.originatorAddress}`}
+                target="_blank"
+              >
+                {mint.originatorAddress.substring(0, 5)}
+              </a>{" "}
+              on {new Date(mint.transactionInfo.blockTimestamp).toDateString()}.
             </Text>
             <Text>
               Tx hash:{" "}
@@ -216,14 +222,22 @@ function App() {
                 href={`https://etherscan.io/tx/${mint.transactionInfo.transactionHash}`}
                 target="_blank"
               >
-                {mint.transactionInfo.transactionHash as string}
+                {mint.transactionInfo.transactionHash.substring(0, 5)}
               </a>
             </Text>
           </VStack>
         );
       })}
 
-      <Text>Current owner - {nftData?.token?.token.owner as string}</Text>
+      <Text>
+        Current owner -{" "}
+        <a
+          href={`https://etherscan.io/address/${nftData?.token?.token.owner}`}
+          target="_blank"
+        >
+          {nftData?.token?.token.owner.substring(0, 5)}
+        </a>
+      </Text>
 
       <Divider />
       <Text>
