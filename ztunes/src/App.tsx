@@ -24,10 +24,10 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import songs from "./songs.json";
+import { useNavigate, useParams } from "react-router-dom";
 
 const appendIpfsGateway = (ipfsHash: string) => {
   return `https://zora-prod.mypinata.cloud/ipfs/${ipfsHash}`;
-  // return `https://ipfs.infura.io/ipfs/${ipfsHash}`;
 };
 
 const processIpfsUri = (url: string) => {
@@ -51,9 +51,14 @@ const getRandomSong = () => {
 };
 
 function App() {
+  const params = useParams();
+  const navigate = useNavigate();
+
   const randomSong = getRandomSong();
-  const [collectionAddress, setCollectionAddress] = useState(randomSong[0]);
-  const [tokenId, setTokenId] = useState(randomSong[1]);
+  const [collectionAddress, setCollectionAddress] = useState(
+    params.collection || randomSong[0]
+  );
+  const [tokenId, setTokenId] = useState(params.tokenId || randomSong[1]);
 
   const [collectionData, setCollectionData] = useState({});
   const [salesData, setSalesData]: [any, any] = useState({});
@@ -89,6 +94,7 @@ function App() {
 
   const nextSong = () => {
     const randomSong = getRandomSong();
+    navigate(`../../${randomSong[0]}/${randomSong[1]}`, { replace: true });
     setCollectionAddress(randomSong[0]);
     setTokenId(randomSong[1]);
   };
