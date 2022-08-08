@@ -105,9 +105,7 @@ function App() {
 
       <HStack padding="4" spacing="8">
         <VStack spacing="0">
-          <FormLabel htmlFor="collectionAddress">
-            Collection/contract Address
-          </FormLabel>
+          <FormLabel htmlFor="collectionAddress">Collection</FormLabel>
           <Input
             id="collectionAddress"
             value={collectionAddress}
@@ -169,8 +167,8 @@ function App() {
             <Thead>
               <Tr>
                 <Th>Buyer</Th>
-                <Th>Price (USD)</Th>
-                <Th>Price (ETH)</Th>
+                <Th>Price</Th>
+                {/* <Th>Price (ETH)</Th> */}
                 <Th>Date</Th>
                 {/* <Th>Tx Hash</Th> */}
               </Tr>
@@ -180,11 +178,18 @@ function App() {
               {salesData?.sales.nodes.map(({ sale }: { sale: any }) => {
                 return (
                   <Tr key={sale.transactionInfo.transactionHash}>
-                    <Td>{sale.buyerAddress}</Td>
+                    <Td>
+                      <a
+                        href={`https://etherscan.io/address/${sale.buyerAddress}`}
+                        target="_blank"
+                      >
+                        {sale.buyerAddress.substring(0, 5)}
+                      </a>
+                    </Td>
                     <Td>
                       ${Math.round(+(sale.price.usdcPrice?.decimal as number))}
                     </Td>
-                    <Td>{sale.price.nativePrice.decimal}</Td>
+                    {/* <Td>{sale.price.nativePrice.decimal}</Td> */}
                     <Td>
                       {new Date(
                         sale.transactionInfo.blockTimestamp
