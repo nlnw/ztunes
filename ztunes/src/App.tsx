@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import { getCollection, getMintData, getNftData, getSalesData } from "./api";
 import {
@@ -60,7 +60,7 @@ function App() {
   );
   const [tokenId, setTokenId] = useState(params.tokenId || randomSong[1]);
 
-  const [collectionData, setCollectionData] = useState({});
+  const [, setCollectionData] = useState({});
   const [salesData, setSalesData]: [any, any] = useState({});
   const [mintData, setMintData]: [any, any] = useState({});
   const [nftData, setNftData]: [any, any] = useState({});
@@ -99,7 +99,7 @@ function App() {
     setTokenId(randomSong[1]);
   };
 
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { toggleColorMode } = useColorMode();
 
   return (
     <VStack paddingY="10">
