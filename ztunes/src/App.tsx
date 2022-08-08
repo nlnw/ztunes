@@ -26,16 +26,18 @@ import {
 import songs from "./songs.json";
 
 const appendIpfsGateway = (ipfsHash: string) => {
-  return `https://ipfs.infura.io/ipfs/${ipfsHash}`;
+  return `https://zora-prod.mypinata.cloud/ipfs/${ipfsHash}`;
+  // return `https://ipfs.infura.io/ipfs/${ipfsHash}`;
 };
 
-// Adds a prefix to the image URI to make it a valid URL, in case it's an IPFS hash
-const processImgURI = (url: string) => {
+const processIpfsUri = (url: string) => {
   if (!url) {
-    return null;
+    return "";
   }
 
-  const replacedUrl = url.replace("ipfs://", "");
+  const replacedUrl = url
+    .replace("ipfs://", "")
+    .replace("^https://ipfs.io/ipfs/", "");
 
   if (replacedUrl !== url) {
     return appendIpfsGateway(replacedUrl);
@@ -78,7 +80,7 @@ function App() {
   }, [collectionAddress, tokenId]);
 
   const imageURI = useMemo(
-    () => processImgURI(nftData?.token?.token.image?.url as string) as string,
+    () => processIpfsUri(nftData?.token?.token.image?.url as string),
     [nftData]
   );
 
@@ -124,7 +126,6 @@ function App() {
       </HStack>
 
       <Divider />
-
       {imageURI ? (
         <Box
           borderWidth="1px"
@@ -150,7 +151,7 @@ function App() {
       <audio
         controls
         autoPlay
-        src={nftData?.token?.token.content?.url}
+        src={processIpfsUri(nftData?.token?.token.content?.url)}
         onEnded={nextSong}
       />
 
